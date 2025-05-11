@@ -2,6 +2,7 @@ package pl.wsb.fitnesstracker.user.internal;
 
 import org.springframework.stereotype.Component;
 import pl.wsb.fitnesstracker.user.api.User;
+import pl.wsb.fitnesstracker.user.api.UserSimpleDto;
 
 @Component
 class UserMapper {
