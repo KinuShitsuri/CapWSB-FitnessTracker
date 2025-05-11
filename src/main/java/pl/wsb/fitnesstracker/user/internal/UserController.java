@@ -32,6 +32,14 @@ class UserController {
                 .toList();
     }
 
+    @GetMapping("/{id}")
+    public UserDto getUserById(@PathVariable Long id) {
+        return userService.getUser(id)
+                .stream()
+                .map(userMapper::toDto)
+                .findAny().get();
+    }
+
     @PostMapping
     public UserDto addUser(@RequestBody UserDto userDto) throws InterruptedException {
 
