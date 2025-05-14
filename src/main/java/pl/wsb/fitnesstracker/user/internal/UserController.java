@@ -1,9 +1,12 @@
 package pl.wsb.fitnesstracker.user.internal;
 
+import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import pl.wsb.fitnesstracker.user.api.UserSimpleDto;
 
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -43,6 +46,14 @@ class UserController {
     @GetMapping("/email")
     public List<UserDto> getUserByEmail(@RequestParam String email) {
         return userService.getUserByEmail(email)
+                .stream()
+                .map(userMapper::toDto)
+                .findAny().stream().toList();
+    }
+
+    @GetMapping("/older/{time}")
+    public List<UserDto> getUserOlderThan(@PathVariable LocalDate time) {
+        return userService.getUserOlderThan(time)
                 .stream()
                 .map(userMapper::toDto)
                 .findAny().stream().toList();

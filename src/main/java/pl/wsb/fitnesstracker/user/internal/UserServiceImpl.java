@@ -7,6 +7,8 @@ import pl.wsb.fitnesstracker.user.api.User;
 import pl.wsb.fitnesstracker.user.api.UserProvider;
 import pl.wsb.fitnesstracker.user.api.UserService;
 
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -35,6 +37,9 @@ class UserServiceImpl implements UserService, UserProvider {
     public Optional<User> getUserByEmail(final String email) {
         return userRepository.findByEmail(email);
     }
+
+    @Override
+    public Optional<User> getUserOlderThan(final LocalDate birthdate){ return userRepository.findByBirthdateBefore(birthdate);}
 
     @Override
     public List<User> findAllUsers() {
