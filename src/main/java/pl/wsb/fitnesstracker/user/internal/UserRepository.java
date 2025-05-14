@@ -27,8 +27,4 @@ interface UserRepository extends JpaRepository<User, Long> {
                 .findFirst();
     }
 
-    default void deleteUserById(Long id){
-
-    }
-
 }

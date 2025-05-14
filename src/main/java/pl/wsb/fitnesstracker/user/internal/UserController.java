@@ -2,6 +2,7 @@ package pl.wsb.fitnesstracker.user.internal;
 
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.wsb.fitnesstracker.user.api.UserSimpleDto;
 
@@ -60,8 +61,9 @@ class UserController {
     }
 
     @DeleteMapping("/{userId}")
-    public void deleteUser(@PathVariable Long userId) {
+    public ResponseEntity<Void> deleteUser(@PathVariable Long userId) {
          userService.deleteUserById(userId);
+         return ResponseEntity.noContent().build();
     }
 
     @PostMapping
