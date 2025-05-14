@@ -40,6 +40,14 @@ class UserController {
                 .findAny().get();
     }
 
+    @GetMapping("/email")
+    public List<UserDto> getUserByEmail(@RequestParam String email) {
+        return userService.getUserByEmail(email)
+                .stream()
+                .map(userMapper::toDto)
+                .findAny().stream().toList();
+    }
+
     @PostMapping
     public UserDto addUser(@RequestBody UserDto userDto) throws InterruptedException {
 
