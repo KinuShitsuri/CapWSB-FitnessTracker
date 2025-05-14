@@ -14,4 +14,6 @@ public interface UserService {
 
     Optional<User> getUserOlderThan(final LocalDate birthdate);
 
+    void deleteUserById(final Long id);
+
 }

@@ -59,6 +59,11 @@ class UserController {
                 .findAny().stream().toList();
     }
 
+    @DeleteMapping("/{userId}")
+    public void deleteUser(@PathVariable Long userId) {
+         userService.deleteUserById(userId);
+    }
+
     @PostMapping
     public UserDto addUser(@RequestBody UserDto userDto) throws InterruptedException {
 
