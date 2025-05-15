@@ -1,8 +1,7 @@
 package pl.wsb.fitnesstracker.user.api;
 
 import java.time.LocalDate;
-import java.util.Date;
-import java.util.Optional;
+import java.util.List;
 
 /**
  * Interface (API) for modifying operations on {@link User} entities through the API.
@@ -12,7 +11,9 @@ public interface UserService {
 
     User createUser(User user);
 
-    Optional<User> getUserOlderThan(final LocalDate birthdate);
+    User updateUser(Long id, User user);
+
+    List<User> getUserOlderThan(final LocalDate birthdate);
 
     void deleteUserById(final Long id);
 

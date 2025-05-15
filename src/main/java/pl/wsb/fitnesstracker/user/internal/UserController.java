@@ -1,14 +1,16 @@
 package pl.wsb.fitnesstracker.user.internal;
 
-import lombok.Data;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import pl.wsb.fitnesstracker.user.api.User;
+import pl.wsb.fitnesstracker.user.api.UserEmailDto;
 import pl.wsb.fitnesstracker.user.api.UserSimpleDto;
 
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
+import java.util.stream.Stream;
 
 @RestController
 @RequestMapping("/v1/users")
@@ -41,15 +43,15 @@ class UserController {
         return userService.getUser(id)
                 .stream()
                 .map(userMapper::toDto)
-                .findAny().get();
+                .findFirst().orElseThrow();
     }
 
     @GetMapping("/email")
-    public List<UserDto> getUserByEmail(@RequestParam String email) {
+    public List<UserEmailDto> getUserByEmail(@RequestParam String email) {
         return userService.getUserByEmail(email)
                 .stream()
-                .map(userMapper::toDto)
-                .findAny().stream().toList();
+                .map(userMapper::toEmailDto)
+                .toList();
     }
 
     @GetMapping("/older/{time}")
@@ -57,7 +59,7 @@ class UserController {
         return userService.getUserOlderThan(time)
                 .stream()
                 .map(userMapper::toDto)
-                .findAny().stream().toList();
+                .toList();
     }
 
     @DeleteMapping("/{userId}")
@@ -67,13 +69,29 @@ class UserController {
     }
 
     @PostMapping
-    public UserDto addUser(@RequestBody UserDto userDto) throws InterruptedException {
+    public ResponseEntity<UserDto> addUser(@RequestBody UserDto userDto) throws InterruptedException {
+        UserDto createdUser = Stream.of(userDto)
+                .map(userMapper::toEntity)
+                .map(userService::createUser)
+                .map(userMapper::toDto)
+                .findFirst().orElseThrow();
 
-        // TODO: Implement the method to add a new user.
-        //  You can use the @RequestBody annotation to map the request body to the UserDto object.
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(createdUser);
+    }
 
+    @PutMapping("/{userId}")
+    public ResponseEntity<UserDto> updateUser(@PathVariable Long userId,
+                                              @RequestBody UserDto userDto) {
+        User userToUpdate = Stream.of(userDto).map(userMapper::toEntity).findAny().orElseThrow();
+        UserDto updatedUser = Stream.of(userService.updateUser(userId, userToUpdate))
+                .map(userMapper::toDto)
+                .findFirst().orElseThrow();
 
-        return null;
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(updatedUser);
     }
 
 }

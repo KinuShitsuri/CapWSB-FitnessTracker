@@ -5,6 +5,7 @@ import pl.wsb.fitnesstracker.user.api.User;
 
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -16,15 +17,17 @@ interface UserRepository extends JpaRepository<User, Long> {
      * @param email email of the user to search
      * @return {@link Optional} containing found user or {@link Optional#empty()} if none matched
      */
-    default Optional<User> findByEmail(String email) {
+    default List<User> findByEmail(String email) {
+
+        String lowerInput = email.toLowerCase();
+
         return findAll().stream()
-                .filter(user -> Objects.equals(user.getEmail(), email))
-                .findFirst();
+                .filter(user -> user.getEmail() != null && user.getEmail().toLowerCase().contains(lowerInput))
+                .toList();
     }
 
-    default Optional<User> findByBirthdateBefore(LocalDate birthdate) {
-        return findAll().stream()
-                .findFirst();
+    default List<User> findByBirthdateBefore(LocalDate birthdate) {
+        return findAll().stream().toList();
     }
 
 }
