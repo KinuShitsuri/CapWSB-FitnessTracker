@@ -10,6 +10,26 @@ import lombok.ToString;
 
 import java.time.LocalDate;
 
+/**
+ * Entity class representing a user in the system.
+ * This class is mapped to the "users" table in the database and represents user-related information such as name, birthdate, and email.
+ * It is designed for persistence and manipulation using JPA.
+ *
+ * An instance of this class is immutable except for fields that are explicitly annotated for JPA updates.
+ *
+ * Features and behavior:
+ * - A unique identifier (ID) is auto-generated for each user record.
+ * - Contains basic user information like first name, last name, birthdate, and email.
+ * - The `email` field is unique and mandatory for identifying users.
+ * - Provides a constructor for initializing new user objects with the required fields.
+ *
+ * Annotations used:
+ * - `@Entity`: Specifies that this class is a JPA entity.
+ * - `@Table`: Defines the table name in the database for mapping this entity.
+ * - `@Getter` and `@Setter`: Automatically generates getter and setter methods for fields.
+ * - `@NoArgsConstructor`: Generates a no-argument constructor with protected access level (for JPA).
+ * - `@ToString`: Automatically generates a `toString` method for easy debugging and logging.
+ */
 @Entity
 @Table(name = "users")
 @Getter

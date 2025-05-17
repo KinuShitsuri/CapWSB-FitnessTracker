@@ -11,10 +11,30 @@ public interface UserService {
 
     User createUser(User user);
 
+    /**
+     * Updates the existing user specified by the provided ID with new information.
+     * If the user with the given ID does not exist, an exception may be thrown by the implementation.
+     *
+     * @param id   the unique identifier of the user to be updated
+     * @param user the updated user information to be applied
+     * @return the updated {@link User} object after successful application of changes
+     */
     User updateUser(Long id, User user);
 
+    /**
+     * Retrieves a list of users who are older than the given birthdate.
+     *
+     * @param birthdate the birthdate used as the threshold for determining users' ages
+     * @return a list of {@link User} objects corresponding to users who are older than the specified date
+     */
     List<User> getUserOlderThan(final LocalDate birthdate);
 
+    /**
+     * Deletes a user identified by the provided ID.
+     * If the user with the specified ID does not exist, an exception may be thrown by the implementation.
+     *
+     * @param id the unique identifier of the user to be deleted
+     */
     void deleteUserById(final Long id);
 
 }
