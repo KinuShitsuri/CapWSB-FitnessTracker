@@ -33,4 +33,12 @@ public class TrainingServiceImpl implements TrainingProvider {
         return trainingRepository.findByUserId(userId);
     }
 
+    @Override
+    public Training createTraining(final Training training) {
+        log.info("Creating Training {}", training);
+        if (training.getId() != null) {
+            throw new IllegalArgumentException("Training has already DB ID, update is not permitted!");
+        }
+        return trainingRepository.save(training);
+    }
 }

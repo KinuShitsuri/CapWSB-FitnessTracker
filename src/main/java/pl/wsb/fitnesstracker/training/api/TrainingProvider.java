@@ -19,4 +19,6 @@ public interface TrainingProvider {
     List<Training> getAllTrainings();
 
     List<Training> getAllTrainingsByUserId(Long userId);
+
+    Training createTraining(final Training training);
 }
